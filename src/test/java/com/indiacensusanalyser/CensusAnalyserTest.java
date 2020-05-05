@@ -106,5 +106,16 @@ public class CensusAnalyserTest {
             Assert.assertEquals("Wrong Delimeter Or Header In File",exception.getMessage());
         }
     }
+    //UC2->TC-2.5
+    @Test
+    public void givenStateCSVData_Proper_WithImproperHeader_ShouldThrow_CustomException(){
+        StateCodeAnalyser stateCodeAnalyser = new StateCodeAnalyser();
+        try {
+            stateCodeAnalyser.loadStateCodeData(WRONG_STATE_CSV_FILE_DELIMETER_PATH);
+        } catch (CensusAnalyserException exception) {
+            Assert.assertEquals("Wrong Delimeter Or Header In File",exception.getMessage());
+        }
+    }
+
 
 }
