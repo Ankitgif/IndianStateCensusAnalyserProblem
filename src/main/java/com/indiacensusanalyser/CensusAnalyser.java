@@ -33,4 +33,23 @@ public class CensusAnalyser {
         }
         return noOfEntries;
     }
+    public int loadStateCodeData(String path) throws CensusAnalyserException{
+        try{
+            Reader reader = Files.newBufferedReader(Paths.get(path));
+            CsvToBean<CSVStatesBean> csvToBean = new CsvToBeanBuilder(reader)
+                    .withType(CSVStatesBean.class)
+                    .withIgnoreLeadingWhiteSpace(true)
+                    .build();
+            Iterator<CSVStatesBean> csvUserIterator = csvToBean.iterator();
+            while(csvUserIterator.hasNext()){
+                noOfEntries++;
+                CSVStatesBean csvUser = csvUserIterator.next();
+            }
+        } catch (IOException exception) {
+            throw new CensusAnalyserException(CensusAnalyserException.exceptionType.CENSUS_FILE_PROBLEM,"File Not Found");
+        } catch (RuntimeException exception){
+            throw new CensusAnalyserException(CensusAnalyserException.exceptionType.WRONG_DELIMETER_HEADER_IN_FILE,"Wrong Delimeter Or Header In File");
+        }
+        return noOfEntries;
+    }
 }
