@@ -9,6 +9,7 @@ public class CensusAnalyserTest {
     public final String WRONG_CSV_FILE_TYPE_PATH = "E:\\StateCensusData.txt";
     public final String WRONG_CSV_FILE_DELIMETER_PATH = "C:\\Users\\ANKIT\\Desktop\\IndianStateCensusAnalyser\\StateCensusData.csv";
     public final String STATE_CSV_FILE_PATH = "E:\\StateCode.csv";
+    public final String WRONG_STATE_CSV_FILE_PATH = "E:\\StateCo.csv";
 
     //UC1-->TC-1.1
     @Test
@@ -71,6 +72,16 @@ public class CensusAnalyserTest {
             Assert.assertEquals(37,numOfRecord);
         } catch (CensusAnalyserException exception) {
             exception.printStackTrace();
+        }
+    }
+    //UC@-->TC-2.2
+    @Test
+    public void givenStateCSVData_WithWrongFile_ShouldThrow_CustomException(){
+        StateCodeAnalyser stateCodeAnalyser = new StateCodeAnalyser();
+        try {
+            stateCodeAnalyser.loadStateCodeData(WRONG_STATE_CSV_FILE_PATH);
+        } catch (CensusAnalyserException exception) {
+            Assert.assertEquals("File Not Found",exception.getMessage());
         }
     }
 }
