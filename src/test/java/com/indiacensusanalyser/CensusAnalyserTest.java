@@ -68,9 +68,9 @@ public class CensusAnalyserTest {
     //UC2-->TC-2.1
     @Test
     public void givenStateCSVData_WhenProper_ShouldReturnCorrectRecord(){
-        StateCodeAnalyser stateCodeAnalyser = new StateCodeAnalyser();
+        CensusAnalyser censusAnalyser = new CensusAnalyser();
         try {
-            int numOfRecord = stateCodeAnalyser.loadStateCodeData(STATE_CSV_FILE_PATH);
+            int numOfRecord = censusAnalyser.loadStateCodeData(STATE_CSV_FILE_PATH);
             Assert.assertEquals(37,numOfRecord);
         } catch (CensusAnalyserException exception) {
             exception.printStackTrace();
@@ -79,9 +79,9 @@ public class CensusAnalyserTest {
     //UC@-->TC-2.2
     @Test
     public void givenStateCSVData_WithWrongFile_ShouldThrow_CustomException(){
-        StateCodeAnalyser stateCodeAnalyser = new StateCodeAnalyser();
+        CensusAnalyser censusAnalyser = new CensusAnalyser();
         try {
-            stateCodeAnalyser.loadStateCodeData(WRONG_STATE_CSV_FILE_PATH);
+            censusAnalyser.loadStateCodeData(WRONG_STATE_CSV_FILE_PATH);
         } catch (CensusAnalyserException exception) {
             Assert.assertEquals("File Not Found",exception.getMessage());
         }
@@ -89,9 +89,9 @@ public class CensusAnalyserTest {
     //UC2->TC-2.3
     @Test
     public void givenStateCSVData_WithWrongType_ShouldThrowCustomException(){
-        StateCodeAnalyser stateCodeAnalyser = new StateCodeAnalyser();
+        CensusAnalyser censusAnalyser = new CensusAnalyser();
         try {
-            stateCodeAnalyser.loadStateCodeData(WRONG_STATE_CSV_FILE_TYPE_PATH);
+            censusAnalyser.loadStateCodeData(WRONG_STATE_CSV_FILE_TYPE_PATH);
         } catch (CensusAnalyserException exception) {
             Assert.assertEquals("File Not Found",exception.getMessage());
         }
@@ -99,9 +99,9 @@ public class CensusAnalyserTest {
     //UC2->TC-2.4
     @Test
     public void givenStateCSVData_Proper_WithImproperDelimeter_ShouldThrow_CustomException(){
-        StateCodeAnalyser stateCodeAnalyser = new StateCodeAnalyser();
+        CensusAnalyser censusAnalyser = new CensusAnalyser();
         try {
-            stateCodeAnalyser.loadStateCodeData(WRONG_STATE_CSV_FILE_DELIMETER_PATH);
+            censusAnalyser.loadStateCodeData(WRONG_STATE_CSV_FILE_DELIMETER_PATH);
         } catch (CensusAnalyserException exception) {
             Assert.assertEquals("Wrong Delimeter Or Header In File",exception.getMessage());
         }
@@ -109,13 +109,11 @@ public class CensusAnalyserTest {
     //UC2->TC-2.5
     @Test
     public void givenStateCSVData_Proper_WithImproperHeader_ShouldThrow_CustomException(){
-        StateCodeAnalyser stateCodeAnalyser = new StateCodeAnalyser();
+        CensusAnalyser censusAnalyser = new CensusAnalyser();
         try {
-            stateCodeAnalyser.loadStateCodeData(WRONG_STATE_CSV_FILE_DELIMETER_PATH);
+            censusAnalyser.loadStateCodeData(WRONG_STATE_CSV_FILE_DELIMETER_PATH);
         } catch (CensusAnalyserException exception) {
             Assert.assertEquals("Wrong Delimeter Or Header In File",exception.getMessage());
         }
     }
-
-
 }
