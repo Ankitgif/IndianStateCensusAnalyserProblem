@@ -14,7 +14,8 @@ public class CensusAnalyser {
 
     public int loadCensusData(String csvFilePath) throws CensusAnalyserException {
         try (Reader reader = Files.newBufferedReader(Paths.get(csvFilePath));) {
-            Iterator<CensusAnalyserBean> censusAnalyserBeanIterator = new OpenCSVBuilder().getCSVFileIterator(reader, CensusAnalyserBean.class);
+            ICSVBuilder csvBuilder = CSVBuilderFactory.createCSVBuilder();
+            Iterator<CensusAnalyserBean> censusAnalyserBeanIterator = csvBuilder.getCSVFileIterator(reader, CensusAnalyserBean.class);
             return this.getCount(censusAnalyserBeanIterator);
         } catch (IOException exception) {
             throw new CensusAnalyserException(CensusAnalyserException.exceptionType.CENSUS_FILE_PROBLEM, "File Not Found");
@@ -25,7 +26,8 @@ public class CensusAnalyser {
 
     public int loadStateCodeData(String csvFilePath) throws CensusAnalyserException{
         try (Reader reader = Files.newBufferedReader(Paths.get(csvFilePath));){
-            Iterator<CSVStatesBean> csvStatesBeanIterator = new OpenCSVBuilder().getCSVFileIterator(reader, CSVStatesBean.class);
+            ICSVBuilder csvBuilder = CSVBuilderFactory.createCSVBuilder();
+            Iterator<CSVStatesBean> csvStatesBeanIterator = csvBuilder.getCSVFileIterator(reader, CSVStatesBean.class);
             return this.getCount(csvStatesBeanIterator);
         }catch (IOException exception){
             throw new CensusAnalyserException(CensusAnalyserException.exceptionType.CENSUS_FILE_PROBLEM,"File Not Found");
