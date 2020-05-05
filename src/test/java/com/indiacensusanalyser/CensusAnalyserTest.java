@@ -11,6 +11,7 @@ public class CensusAnalyserTest {
     public final String STATE_CSV_FILE_PATH = "E:\\StateCode.csv";
     public final String WRONG_STATE_CSV_FILE_PATH = "E:\\StateCo.csv";
     public final String WRONG_STATE_CSV_FILE_TYPE_PATH = "E:\\StateCode.txt";
+    public final String WRONG_STATE_CSV_FILE_DELIMETER_PATH = "C:\\Users\\ANKIT\\Desktop\\IndianStateCensusAnalyser\\StateCode.csv";
 
     //UC1-->TC-1.1
     @Test
@@ -95,4 +96,15 @@ public class CensusAnalyserTest {
             Assert.assertEquals("File Not Found",exception.getMessage());
         }
     }
+    //UC2->TC-2.4
+    @Test
+    public void givenStateCSVData_Proper_WithImproperDelimeter_ShouldThrow_CustomException(){
+        StateCodeAnalyser stateCodeAnalyser = new StateCodeAnalyser();
+        try {
+            stateCodeAnalyser.loadStateCodeData(WRONG_STATE_CSV_FILE_DELIMETER_PATH);
+        } catch (CensusAnalyserException exception) {
+            Assert.assertEquals("Wrong Delimeter Or Header In File",exception.getMessage());
+        }
+    }
+
 }
