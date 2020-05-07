@@ -1,7 +1,8 @@
 package com.indiacensusanalyser;
 
-import com.opencsv.bean.CsvToBean;
-import com.opencsv.bean.CsvToBeanBuilder;
+import com.csvbuilderhandler.CSVBuilderException;
+import com.csvbuilderhandler.CSVBuilderFactory;
+import com.csvbuilderhandler.ICSVBuilder;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -21,6 +22,8 @@ public class CensusAnalyser {
             throw new CensusAnalyserException(CensusAnalyserException.exceptionType.CENSUS_FILE_PROBLEM, "File Not Found");
         } catch (RuntimeException exception) {
             throw new CensusAnalyserException(CensusAnalyserException.exceptionType.WRONG_DELIMETER_HEADER_IN_FILE, "Wrong Delimeter Or Header In File");
+        } catch (CSVBuilderException exception) {
+            throw new CensusAnalyserException(exception.getMessage(),exception.type.name());
         }
     }
 
@@ -33,6 +36,8 @@ public class CensusAnalyser {
             throw new CensusAnalyserException(CensusAnalyserException.exceptionType.CENSUS_FILE_PROBLEM,"File Not Found");
         } catch (RuntimeException exception){
             throw new CensusAnalyserException(CensusAnalyserException.exceptionType.WRONG_DELIMETER_HEADER_IN_FILE,"Wrong Delimeter Or Header In File");
+        } catch (CSVBuilderException exception) {
+            throw new CensusAnalyserException(exception.getMessage(),exception.type.name());
         }
     }
 
