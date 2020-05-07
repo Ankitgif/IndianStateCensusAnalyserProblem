@@ -1,5 +1,6 @@
 package com.indiacensusanalyser;
 
+import com.google.gson.Gson;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -114,6 +115,18 @@ public class CensusAnalyserTest {
             censusAnalyser.loadStateCodeData(WRONG_STATE_CSV_FILE_DELIMETER_PATH);
         } catch (CensusAnalyserException exception) {
             Assert.assertEquals("Wrong Delimeter Or Header In File",exception.getMessage());
+        }
+    }
+    @Test
+    public void givenIndianCensusData_WhenSortedOnState_ShouldReturnSortedResult(){
+        CensusAnalyser censusAnalyser = new CensusAnalyser();
+        String sortedCensusData = null;
+        try {
+            sortedCensusData = censusAnalyser.getStateWiseSortedCensusData(INDIA_CENSUS_CSV_FILE_PATH);
+            CensusAnalyserBean[] censusCSV = new Gson().fromJson(sortedCensusData, CensusAnalyserBean[].class);
+            Assert.assertEquals("Andhra Pradesh",censusCSV[0].state);
+        } catch (CensusAnalyserException e) {
+            e.printStackTrace();
         }
     }
 }
