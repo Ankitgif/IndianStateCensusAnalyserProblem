@@ -16,10 +16,12 @@ import java.util.stream.StreamSupport;
 
 public class CensusAnalyser {
 
+    List<CensusAnalyserBean> censusAnalyserBeanList = null;
+
     public int loadCensusData(String csvFilePath) throws CensusAnalyserException {
         try (Reader reader = Files.newBufferedReader(Paths.get(csvFilePath));) {
             ICSVBuilder csvBuilder = CSVBuilderFactory.createCSVBuilder();
-            List<CensusAnalyserBean> censusAnalyserBeanList = csvBuilder.getCSVFileList(reader, CensusAnalyserBean.class);
+            censusAnalyserBeanList = csvBuilder.getCSVFileList(reader, CensusAnalyserBean.class);
             return censusAnalyserBeanList.size();
         } catch (IOException exception) {
             throw new CensusAnalyserException(CensusAnalyserException.exceptionType.CENSUS_FILE_PROBLEM, "File Not Found");
@@ -44,29 +46,24 @@ public class CensusAnalyser {
         }
     }
 
-    public String getStateWiseSortedCensusData(String csvFilePath) throws CensusAnalyserException {
-        try (Reader reader = Files.newBufferedReader(Paths.get(csvFilePath));) {
-            ICSVBuilder csvBuilder = CSVBuilderFactory.createCSVBuilder();
-            List<CensusAnalyserBean> csvStatesBeanList = csvBuilder.getCSVFileList(reader, CensusAnalyserBean.class);
+    public String getStateWiseSortedCensusData() throws CensusAnalyserException {
+            if(censusAnalyserBeanList == null || censusAnalyserBeanList.size() == 0){
+                throw new CensusAnalyserException(CensusAnalyserException.exceptionType.NO_CENSUS_DATA,"No Census Data");
+            }
             Comparator<CensusAnalyserBean> censusComparator = Comparator.comparing(census -> census.state);
-            this.sort(csvStatesBeanList, censusComparator);
-            String sortedStateCensusJson = new Gson().toJson(csvStatesBeanList);
+            this.sort(censusComparator);
+            String sortedStateCensusJson = new Gson().toJson(censusAnalyserBeanList);
             return sortedStateCensusJson;
-        } catch (IOException exception){
-            throw new CensusAnalyserException(CensusAnalyserException.exceptionType.CENSUS_FILE_PROBLEM,"File Not Found");
-        } catch (CSVBuilderException exception) {
-            throw new CensusAnalyserException(exception.getMessage(),exception.type.name());
-        }
     }
 
-    private void sort(List<CensusAnalyserBean> censusList, Comparator<CensusAnalyserBean> censusComparator){
-        for(int i=0;i<censusList.size()-i;i++){
-            for (int j=0;j<censusList.size()-i-1;j++){
-                CensusAnalyserBean census1 = censusList.get(j);
-                CensusAnalyserBean census2 = censusList.get(j+1);
+    private void sort(Comparator<CensusAnalyserBean> censusComparator){
+        for(int i=0;i<censusAnalyserBeanList.size()-i;i++){
+            for (int j=0;j<censusAnalyserBeanList.size()-i-1;j++){
+                CensusAnalyserBean census1 = censusAnalyserBeanList.get(j);
+                CensusAnalyserBean census2 = censusAnalyserBeanList.get(j+1);
                 if(censusComparator.compare(census1,census2) > 0){
-                    censusList.set(j, census2);
-                    censusList.set(j+1, census1);
+                    censusAnalyserBeanList.set(j, census2);
+                    censusAnalyserBeanList.set(j+1, census1);
                 }
             }
         }
