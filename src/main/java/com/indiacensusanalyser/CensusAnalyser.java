@@ -96,6 +96,15 @@ public class CensusAnalyser {
         return sortedStateCodeJson;
     }
 
+    public String getStateWiseMostPopulationDensityState() throws CensusAnalyserException {
+        if(indiaCensusDAOMap == null || indiaCensusDAOMap.size() == 0){
+            throw new CensusAnalyserException(CensusAnalyserException.exceptionType.NO_CENSUS_DATA,"No Census Data");
+        }
+        Comparator<IndiaCensusDAO> censusComparator = Comparator.comparing(census -> census.densityPerSqKm);
+        List<IndiaCensusDAO> sortedStateCode = this.sort(censusComparator, new ArrayList<>(indiaCensusDAOMap.values()));
+        String sortedStateCodeJson = new Gson().toJson(sortedStateCode);
+        return sortedStateCodeJson;
+    }
 
     private <E> List<E> sort(Comparator<E> comparator, List<E> censusComparator){
         for(int i=0;i<censusComparator.size()-i;i++){
