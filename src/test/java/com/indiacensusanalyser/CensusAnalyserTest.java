@@ -128,7 +128,7 @@ public class CensusAnalyserTest {
             CensusAnalyser censusAnalyser = new CensusAnalyser();
             censusAnalyser.loadStateCensusData(INDIA_CENSUS_CSV_FILE_PATH);
             String sortedCensusData = censusAnalyser.getStateWiseSortedCensusData();
-            CensusAnalyserBean[] censusCSV = new Gson().fromJson(sortedCensusData, CensusAnalyserBean[].class);
+            IndiaCensusDAO[] censusCSV = new Gson().fromJson(sortedCensusData, IndiaCensusDAO[].class);
             Assert.assertEquals("Andhra Pradesh",censusCSV[0].state);
         } catch (CensusAnalyserException e) {
             e.printStackTrace();
@@ -146,5 +146,17 @@ public class CensusAnalyserTest {
         } catch (CensusAnalyserException e) {
             e.printStackTrace();
         }
+   }
+   @Test
+    public void givenIndianCensusData_WhenSortedOnStatePopulation_ShouldReturnMostPopulous(){
+       try {
+           CensusAnalyser censusAnalyser = new CensusAnalyser();
+           censusAnalyser.loadStateCensusData(INDIA_CENSUS_CSV_FILE_PATH);
+           String mostPopulous = censusAnalyser.getStateWiseMostPopulousState();
+           IndiaCensusDAO censusCSV[] = new Gson().fromJson(String.valueOf(mostPopulous), IndiaCensusDAO[].class);
+           Assert.assertEquals(199812341,censusCSV[censusCSV.length-1].population);
+       } catch (CensusAnalyserException e) {
+           e.printStackTrace();
+       }
    }
 }
