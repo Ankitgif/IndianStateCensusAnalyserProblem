@@ -122,6 +122,7 @@ public class CensusAnalyserTest {
             Assert.assertEquals("Wrong Delimeter Or Header In File",exception.getMessage());
         }
     }
+    //UC3
     @Test
     public void givenIndianCensusData_WhenSortedOnState_ShouldReturnSortedResult(){
         try{
@@ -134,6 +135,7 @@ public class CensusAnalyserTest {
             e.printStackTrace();
         }
     }
+    //UC4
     @Test
     public void givenIndianCensusData_WhenSortedOnStateCode_ShouldReturnSortedResult(){
         try{
@@ -147,16 +149,32 @@ public class CensusAnalyserTest {
             e.printStackTrace();
         }
    }
+   //UC5
    @Test
     public void givenIndianCensusData_WhenSortedOnStatePopulation_ShouldReturnMostPopulous(){
        try {
            CensusAnalyser censusAnalyser = new CensusAnalyser();
            censusAnalyser.loadStateCensusData(INDIA_CENSUS_CSV_FILE_PATH);
            String mostPopulous = censusAnalyser.getStateWiseMostPopulousState();
-           IndiaCensusDAO censusCSV[] = new Gson().fromJson(String.valueOf(mostPopulous), IndiaCensusDAO[].class);
+           IndiaCensusDAO censusCSV[] = new Gson().fromJson(mostPopulous, IndiaCensusDAO[].class);
            Assert.assertEquals(199812341,censusCSV[censusCSV.length-1].population);
        } catch (CensusAnalyserException e) {
            e.printStackTrace();
        }
    }
+   //UC6
+   @Test
+   public void givenIndianCensusData_WhenSortedOnDensity_ShouldReturnMostPopulationDensity() {
+       try {
+           CensusAnalyser censusAnalyser = new CensusAnalyser();
+           censusAnalyser.loadStateCensusData(INDIA_CENSUS_CSV_FILE_PATH);
+           String mostPopulous = censusAnalyser.getStateWiseMostPopulationDensityState();
+           IndiaCensusDAO censusCSV[] = new Gson().fromJson(mostPopulous, IndiaCensusDAO[].class);
+           Assert.assertEquals(1102, censusCSV[censusCSV.length - 1].densityPerSqKm);
+           Assert.assertEquals("Bihar",censusCSV[censusCSV.length - 1].state);
+       } catch (CensusAnalyserException e) {
+           e.printStackTrace();
+       }
+   }
+
 }
