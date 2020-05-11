@@ -19,38 +19,6 @@ public class CSVStatesBean {
 
     }
 
-    public int getSrno() {
-        return srno;
-    }
-
-    public void setSrno(int srno) {
-        this.srno = srno;
-    }
-
-    public String getStatename() {
-        return statename;
-    }
-
-    public void setStatename(String statename) {
-        this.statename = statename;
-    }
-
-    public int getTin() {
-        return tin;
-    }
-
-    public void setTin(int tin) {
-        this.tin = tin;
-    }
-
-    public String getStatecode() {
-        return statecode;
-    }
-
-    public void setStatecode(String statecode) {
-        this.statecode = statecode;
-    }
-
     @Override
     public String toString() {
         return "CSVStatesBean{" +
