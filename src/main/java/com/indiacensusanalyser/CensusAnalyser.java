@@ -14,7 +14,7 @@ import java.util.stream.StreamSupport;
 
 public class CensusAnalyser {
 
-        Map<String, IndiaCensusDAO> indiaCensusDAOMap = null;
+    Map<String, IndiaCensusDAO> indiaCensusDAOMap = null;
 
     public CensusAnalyser() {
         indiaCensusDAOMap = new HashMap<String, IndiaCensusDAO>();
@@ -42,8 +42,9 @@ public class CensusAnalyser {
         }
     }
 
-    public int loadStateCodeData(String csvFilePath) throws CensusAnalyserException{
-        try (Reader reader = Files.newBufferedReader(Paths.get(csvFilePath));){
+    public int loadStateCodeData(String csvCensusFilePath, String csvStateFilePath) throws CensusAnalyserException{
+        this.loadStateCensusData(csvCensusFilePath);
+        try (Reader reader = Files.newBufferedReader(Paths.get(csvStateFilePath));){
             ICSVBuilder csvBuilder = CSVBuilderFactory.createCSVBuilder();
             Iterator<CSVStatesBean> csvStatesBeanIterator = csvBuilder.getCSVFileIterator(reader, CSVStatesBean.class);
             Iterable<CSVStatesBean> csvStatesBeanIterable = () -> csvStatesBeanIterator;
@@ -115,7 +116,6 @@ public class CensusAnalyser {
         String sortedStateCodeJson = new Gson().toJson(sortedStateCode);
         return sortedStateCodeJson;
     }
-
 
     private <E> List<E> sort(Comparator<E> comparator, List<E> censusComparator){
         for(int i=0;i<censusComparator.size()-i;i++){
