@@ -6,13 +6,10 @@ public class IndiaCensusDAO  {
     public int areaInSqKm;
     public int densityPerSqKm;
     public String stateCode;
-
     public IndiaCensusDAO(CensusAnalyserBean censusAnalyserBean){
         state = censusAnalyserBean.state;
         population = censusAnalyserBean.population;
         areaInSqKm = censusAnalyserBean.areaInSqKm;
         densityPerSqKm = censusAnalyserBean.densityPerSqKm;
-
-
     }
 }
